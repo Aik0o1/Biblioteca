@@ -1,0 +1,68 @@
+<!-- app/views/livros/index.html.erb -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark w-100 text-white p-3 mb-3">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="http://localhost:5001">Biblioteca</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link " aria-current="page" href="http://localhost:5001">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " aria-current="page" href="http://localhost:5001/alunos">Alunos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="http://localhost:5001/livros">Livros</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="http://localhost:5001/emprestimos">Emprestimo de livro</a>
+        </li>
+        <li class="nav-item">
+          <%=  link_to 'Sair', destroy_user_session_path, class:"nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Exportar Alunos para CSV', exportar_alunos_csv_path, class: 'btn-exportar-csv nav-link' %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class='d-flex flex-column align-items-center'>
+<h1>Livros</h1>
+
+<div id="livros">
+  <% @livros.each do |livro| %>
+
+
+    <div class="ms-1 card  p-3 mb-2">
+      <p><strong>Título:</strong>
+      <%= livro.titulo %>
+      </p>
+
+      <p><strong>Autor:</strong>
+      <%= livro.autor %>
+      </p>
+
+    <% if livro.emprestado? %>
+        <p class="status-emprestimo">Emprestado</p>
+  <% end %>
+      
+    <p>
+      <%= link_to "Exibir Livro", livro, class:'btn btn-primary'%>
+    </p>
+    
+</div>
+     <% end %>
+</div>
+
+<div class="pagination">
+              <%= paginate @livros %>
+          </div>
+
+    
+<%= link_to 'Novo livro', new_livro_path, class:"btn btn-success" %>
+</div>

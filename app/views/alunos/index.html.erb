@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark w-100 text-white p-3 mb-3">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="http://localhost:5001">Biblioteca</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link " aria-current="page" href="http://localhost:5001">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " aria-current="page" href="http://localhost:5001/alunos">Alunos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="http://localhost:5001/livros">Livros</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="http://localhost:5001/emprestimos">Emprestimo de livro</a>
+        </li>
+        <li class="nav-item">
+          <%=  link_to 'Sair', destroy_user_session_path, class:"nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Exportar Alunos para CSV', exportar_alunos_csv_path, class: 'btn-exportar-csv nav-link' %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class='d-flex flex-column align-items-center'>
+<h1>Alunos</h1>
+
+<div id="alunos" class="" >
+  <% @alunos.each do |aluno| %>
+    <div class="ms-1 card  p-3 mb-2">
+      <p><strong>Nome:</strong>
+      <%= aluno.nome %>
+      </p>
+
+      <p><strong>Matrícula:</strong>
+      <%= aluno.matricula %>
+      </p>
+    <p>
+      <%= link_to "Exibir aluno", aluno, class:'btn btn-primary'%>
+    </p>
+    </div>
+
+  <% end %>
+</div>
+
+<%= link_to "Novo aluno", new_aluno_path, class: "btn btn-success" %>
+
+<div class="pagination">
+              <%= paginate @alunos %>
+          </div>
+</div>

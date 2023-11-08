@@ -1,0 +1,81 @@
+<!-- app/views/emprestimos/new.html.erb -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark w-100 text-white p-3 mb-3">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="http://localhost:5001">Biblioteca</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link " aria-current="page" href="http://localhost:5001">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " aria-current="page" href="http://localhost:5001/alunos">Alunos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="http://localhost:5001/livros">Livros</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="http://localhost:5001/emprestimos">Emprestimo de livro</a>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Sair', destroy_user_session_path, class:"nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Exportar Alunos para CSV', exportar_alunos_csv_path, class: 'btn-exportar-csv nav-link' %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-6 position-fixed  mt-5 card w-25">
+      <h1>Novo Empréstimo</h1>
+
+      <%= form_with(model: @emprestimo, local: true, data: { controller: "turbo-stream" }) do |form| %>
+        <div class="mb-3">
+          <%= form.label :livro_id, class: "form-label" %>
+          <%= form.collection_select :livro_id, Livro.all, :id, :titulo, prompt: 'Selecione um livro', class: 'form-select' %>
+        </div>
+
+        <div class="mb-3">
+          <%= form.label :aluno_id, class: "form-label" %>
+          <%= form.collection_select :aluno_id, Aluno.all, :id, :nome, prompt: 'Selecione um aluno', class: 'form-select' %>
+        </div>
+
+        <div class="mb-3">
+          <%= form.submit 'Criar Empréstimo', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+
+      <a href="http://localhost:5001" class="btn btn-secondary w-25">Voltar</a>
+    </div>
+
+    <!-- Seção de livros emprestados -->
+    <div class="col-md-6 float-end w-100">
+      <% if @emprestimos.present? %>
+        <div id="livros-emprestados" class="float-end me-5 ">
+          <h2 class="mb-2">Livros Emprestados</h2>
+          <% @emprestimos.each do |emprestimo| %>
+            <div class="emprestimo mb-4 card p-2 bg-info"style="--bs-bg-opacity: .2;">
+              <p><strong>Aluno:</strong> <%= emprestimo.aluno.nome %></p>
+              <p><strong>Livro:</strong> <%= emprestimo.livro.titulo %></p>
+
+              <%= link_to 'Download Recibo', generate_receipt_emprestimo_path(emprestimo, format: :pdf), class: 'btn btn-secondary me-2 w-75' %>
+              <%= button_to 'Excluir Empréstimo', emprestimo, method: :delete, data: { confirm: 'Tem certeza que deseja excluir este empréstimo?' }, class: 'btn btn-danger w-75 mt-2' %>
+            </div>
+          <% end %>
+          <div class="pagination">
+              <%= paginate @emprestimos %>
+          </div>
+        </div>
+      <% else %>
+        <p>Nenhum livro emprestado no momento.</p>
+      <% end %>
+    </div>
+  </div>
+</div>

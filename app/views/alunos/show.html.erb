@@ -1,0 +1,12 @@
+<p style="color: green"><%= notice %></p>
+
+<div class="d-flex flex-column align-items-center justify-content-center w-100 h-25 fs-4">
+<div class="card p-4">
+<%= render @aluno %>
+
+  <%= link_to "Editar aluno", edit_aluno_path(@aluno), class: "btn btn-primary mb-1" %> 
+  <%= link_to "Voltar", alunos_path, class: "btn btn-secondary" %>
+
+  <%= button_to "Excluir", @aluno, method: :delete, class:"btn btn-danger" %>
+</div>
+</div> 

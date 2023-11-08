@@ -1,0 +1,13 @@
+<div class="d-flex flex-column align-items-center justify-content-center h-25 ms-2">
+
+<h1>Editar livro</h1>
+
+<%= render "form", livro: @livro %>
+
+<br>
+
+<div>
+  <%= link_to "Exibir livro", @livro %> |
+  <%= link_to "Voltar", livros_path %>
+</div>
+</div>
