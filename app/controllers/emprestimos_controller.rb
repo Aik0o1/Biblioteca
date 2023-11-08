@@ -5,8 +5,8 @@ class EmprestimosController < ApplicationController
   end
 
   def index
-    @emprestimos = Emprestimo.all # ou qualquer outra lógica para obter os empréstimos
-    @emprestimo = Emprestimo.new # isso é importante para a criação de um novo empréstimo
+    @emprestimos = Emprestimo.all 
+    @emprestimo = Emprestimo.new 
   
     @emprestimos = @emprestimos.page(params[:page]).per(2)
   end
